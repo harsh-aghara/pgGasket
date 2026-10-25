@@ -1,0 +1,90 @@
+{
+	"name": "pg-gasket",
+	"version": "1.0.0",
+	"description": "Leak warnings for checked-out node-postgres pool clients",
+	"license": "MIT",
+	"type": "commonjs",
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
+	"types": "./dist/types/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/types/index.d.ts",
+			"import": "./dist/esm/index.js",
+			"require": "./dist/cjs/index.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"sideEffects": false,
+	"engines": {
+		"node": ">=18"
+	},
+	"peerDependencies": {
+		"pg": "^8.0.0"
+	},
+	"peerDependenciesMeta": {
+		"pg": {
+			"optional": true
+		}
+	},
+	"scripts": {
+		"build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json && tsc -p tsconfig.types.json && node scripts/mark-esm.cjs",
+		"lint": "eslint . && tsc -p tsconfig.json",
+		"lint:fix": "eslint --fix .",
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"test": "npm run build && node --test test/unit/*.test.cjs",
+		"test:integration": "npm run build && node --test test/integration/*.test.cjs",
+		"test:stress": "npm run build && node --expose-gc --test test/stress/*.test.cjs",
+		"test:package": "npm run build && node test/package/smoke.cjs",
+		"test:all": "npm run test && npm run test:integration && npm run test:stress && npm run test:package",
+		"pack:check": "npm run build && npm pack --dry-run",
+		"spike:stack": "node scripts/spikes/stack.cjs",
+		"spike:pool": "node scripts/spikes/pg-pool.cjs",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*.{ts,js,mjs,cjs}": [
+			"eslint --fix",
+			"prettier --write"
+		],
+		"*.{json,md,yaml,yml}": [
+			"prettier --write"
+		]
+	},
+	"devDependencies": {
+		"@eslint/js": "^10.0.1",
+		"@types/pg": "^8.23.1",
+		"eslint": "^10.13.0",
+		"globals": "^17.13.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^17.6.0",
+		"pg": "^8.23.1",
+		"prettier": "^3.9.10",
+		"typescript": "^5.7.3",
+		"typescript-eslint": "^8.72.0"
+	},
+	"directories": {
+		"doc": "docs",
+		"test": "test"
+	},
+	"author": "harsh-aghara <retrowrench.06@gmail.com>",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/harsh-aghara/pg-gasket.git"
+	},
+	"keywords": [
+		"postgres",
+		"postgresql",
+		"pg",
+		"pool",
+		"connection-leak",
+		"leak-detection",
+		"monitoring"
+	]
+}
