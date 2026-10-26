@@ -21,6 +21,27 @@ The wrapper keeps the client object identity and hooks its per-checkout `release
 
 Warnings use one `console.warn` call. The first line, `pg-gasket: possible connection leak`, is stable. Stack frames are supplied verbatim by Node and can contain absolute source paths. Use `node --enable-source-maps` when that is appropriate for your application.
 
+### Sample Warning Output
+
+```
+pg-gasket: possible connection leak
+checkout: 1
+held: 5012ms
+threshold: 5000ms
+stack:
+    at checkoutConnection (/app/services/database.js:24:22)
+    at handleRequest (/app/routes/api.js:15:9)
+pool: total=5, idle=0, waiting=2
+```
+
+When the checked-out connection is eventually released, a resolution note is logged:
+
+```
+pg-gasket: checkout 1 released after 5230ms
+```
+
+For deeper architectural details, Proxy receiver mechanics, and fail-open design invariants, see [docs/architecture.md](docs/architecture.md).
+
 ## Development checks
 
 ```sh
