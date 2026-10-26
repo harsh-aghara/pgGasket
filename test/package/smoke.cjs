@@ -7,7 +7,8 @@ const { tmpdir } = require('node:os');
 const { join } = require('node:path');
 
 const root = join(__dirname, '..', '..');
-const tarball = execFileSync('npm', ['pack', '--json'], {
+const npmBin = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+const tarball = execFileSync(npmBin, ['pack', '--json'], {
 	cwd: root,
 	encoding: 'utf8'
 });
@@ -22,8 +23,8 @@ if (!filename) {
 const folder = mkdtempSync(join(tmpdir(), 'pg-gasket-package-'));
 
 try {
-	execFileSync('npm', ['init', '-y'], { cwd: folder, stdio: 'ignore' });
-	execFileSync('npm', ['install', '--ignore-scripts', join(root, filename)], {
+	execFileSync(npmBin, ['init', '-y'], { cwd: folder, stdio: 'ignore' });
+	execFileSync(npmBin, ['install', '--ignore-scripts', join(root, filename)], {
 		cwd: folder,
 		stdio: 'inherit'
 	});
