@@ -5,7 +5,9 @@
 </p>
 
 <p align="left">
-  <a href="https://github.com/harsh-aghara/pg-gasket/actions/workflows/ci.yml"><img src="https://github.com/harsh-aghara/pg-gasket/actions/workflows/ci.yml/badge.svg" alt="CI Status" /></a>
+  <a href="https://github.com/harsh-aghara/pgGasket/actions/workflows/ci.yml">
+  <img src="https://github.com/harsh-aghara/pgGasket/actions/workflows/ci.yml/badge.svg" alt="CI"/>
+  </a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT" /></a>
   <img src="https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg" alt="Node >= 18" />
   <img src="https://img.shields.io/badge/TypeScript-Ready-blue.svg" alt="TypeScript Ready" />
